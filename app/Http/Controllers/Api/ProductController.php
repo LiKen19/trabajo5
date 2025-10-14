@@ -5,7 +5,6 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest; 
 use App\Http\Requests\UpdateProductRequest; 
 use App\Http\Resources\ProductResource; 
-use Illuminate\Http\Request;  
 class ProductController extends Controller 
 { 
     /** 
