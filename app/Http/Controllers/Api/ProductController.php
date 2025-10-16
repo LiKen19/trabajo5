@@ -20,10 +20,8 @@ class ProductController extends Controller
     ], 200);
 }
 
-
-
  
-/** 
+    /** 
      * Store a newly created resource in storage. 
      */ 
     public function store(StoreProductRequest $request) 
@@ -56,12 +54,43 @@ public function show(string $id)
 
  
     /** 
+     * Update the specified resource in storage. 
+     */ 
+     public function update(UpdateProductRequest $request, string $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Producto no encontrado'
+            ], 404);
+        }
+
+        $product->update($request->validated());
+
+        return response()->json([
+            'message' => 'Producto actualizado correctamente',
+            'data' => new ProductResource($product)
+        ], 200);
+    }
+ 
+    /** 
      * Remove the specified resource from storage. 
      */ 
-    public function destroy(string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        $product->delete(); 
-        return response()->json(null, 204); 
-    }
+    public function destroy(string $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Producto no encontrado'
+            ], 404);
+        }
+
+        $product->delete();
+
+        return response()->json([
+            'message' => 'Producto eliminado correctamente'
+        ], 204);
+    }
 }
