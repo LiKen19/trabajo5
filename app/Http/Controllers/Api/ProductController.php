@@ -7,26 +7,36 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource; 
 class ProductController extends Controller 
 { 
-    /** 
+       /** 
      * Display a listing of the resource. 
      */ 
-    public function index() 
-    { 
-        $products = Product::all(); 
-        return ProductResource::collection($products); 
-    } 
+    public function index()
+{
+    $products = Product::all();
+
+    return response()->json([
+        'message' => 'Mostrando lista de productos',
+        'data' => ProductResource::collection($products)
+    ], 200);
+}
+
  
-    /** 
+        /** 
      * Store a newly created resource in storage. 
      */ 
     public function store(StoreProductRequest $request) 
     { 
         $product = Product::create($request->validated()); 
-        return new ProductResource($product); 
+        return response()->json([
+        'message' => 'Producto creado con éxito',
+        'data' => new ProductResource($product)
+    ], 201);     
+        
     }
      /** 
      * Display the specified resource. 
      */ 
+
     public function show(string $id) 
     { 
         $product = Product::findOrFail($id); 
