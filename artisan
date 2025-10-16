@@ -6,13 +6,23 @@ use Symfony\Component\Console\Input\ArgvInput;
 
 define('LARAVEL_START', microtime(true));
 
-// Register the Composer autoloader...
-require __DIR__.'/vendor/autoload.php';
+$autoloadPath = __DIR__.'/vendor/autoload.php';
+if (!file_exists($autoloadPath)) {
+    fwrite(STDERR, " Error: Falta el autoloader de Composer. Ejecuta 'composer install' primero.\n");
+    exit(1);
+}
 
-// Bootstrap Laravel and handle the command...
-/** @var Application $app */
-$app = require_once __DIR__.'/bootstrap/app.php';
+require $autoloadPath;
 
-$status = $app->handleCommand(new ArgvInput);
+try {
+    /** @var Application $app */
+    $app = require_once __DIR__.'/bootstrap/app.php';
 
-exit($status);
+    $status = $app->handleCommand(new ArgvInput);
+    exit($status);
+} catch (Throwable $e) {
+    fwrite(STDERR, " Error: {$e->getMessage()}\n");
+    fwrite(STDERR, $e->getTraceAsString() . "\n");
+    exit(1);
+}
+
