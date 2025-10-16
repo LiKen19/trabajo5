@@ -1,0 +1,23 @@
+[33mcommit 41ff8a523eb5b08ca3db5f2ce90f52ddde31c119[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Ricardo Benavides <venewakanda@gmail.com>
+Date:   Wed Oct 15 22:04:13 2025 -0500
+
+    Correccion de errores
+
+[33mcommit 9af90c35043c7aff480c0344e784b4ea78a84a18[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Ykz <jefersanchez251@gmail.com>
+Date:   Tue Oct 14 13:10:29 2025 -0500
+
+    Modifiqué el controller eliminando el illuminate, también agregué en el models/product un fillable de los datos del producto
+
+[33mcommit 96028a17f460cc90bd292d7bc9b17953ca53c420[m
+Author: Ykz <jefersanchez251@gmail.com>
+Date:   Tue Oct 14 12:53:32 2025 -0500
+
+    Modifiqué el controller procurando el problema
+
+[33mcommit 937bc2142e4be2ff7ee24e070762aa616f5facfe[m
+Author: Ykz <jefersanchez251@gmail.com>
+Date:   Mon Oct 13 20:13:17 2025 -0500
+
+    Desarrollando el crud
