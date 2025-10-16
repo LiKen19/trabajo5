@@ -23,32 +23,37 @@ class ProductController extends Controller
 
 
  
-    /** 
+/** 
      * Store a newly created resource in storage. 
      */ 
     public function store(StoreProductRequest $request) 
     { 
         $product = Product::create($request->validated()); 
-        return new ProductResource($product); 
+        return response()->json([
+        'message' => 'Producto creado con éxito',
+        'data' => new ProductResource($product)
+    ], 201);     
+        
     }
      /** 
      * Display the specified resource. 
      */ 
-    public function show(string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        return new ProductResource($product); 
-    } 
- 
-    /** 
-     * Update the specified resource in storage. 
-     */ 
-    public function update(UpdateProductRequest $request, string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        $product->update($request->validated()); 
-        return new ProductResource($product); 
-    } 
+public function show(string $id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return response()->json([
+            'message' => 'Producto no encontrado',
+        ], 404);
+    }
+
+    return response()->json([
+        'message' => 'Mostrando producto seleccionado',
+        'data' => new ProductResource($product)
+    ]);
+}
+
  
     /** 
      * Remove the specified resource from storage. 
