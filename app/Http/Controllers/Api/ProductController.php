@@ -10,11 +10,16 @@ class ProductController extends Controller
     /** 
      * Display a listing of the resource. 
      */ 
-    public function index() 
-    { 
-        $products = Product::all(); 
-        return ProductResource::collection($products); 
-    } 
+    public function index()
+{
+    $products = Product::all();
+
+    return response()->json([
+        'message' => 'Mostrando lista de productos',
+        'data' => ProductResource::collection($products)
+    ], 200);
+}
+
  
     /** 
      * Store a newly created resource in storage. 
@@ -22,34 +27,70 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request) 
     { 
         $product = Product::create($request->validated()); 
-        return new ProductResource($product); 
+        return response()->json([
+        'message' => 'Producto creado con éxito',
+        'data' => new ProductResource($product)
+    ], 201);     
+        
     }
      /** 
      * Display the specified resource. 
      */ 
-    public function show(string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        return new ProductResource($product); 
-    } 
+public function show(string $id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return response()->json([
+            'message' => 'Producto no encontrado',
+        ], 404);
+    }
+
+    return response()->json([
+        'message' => 'Mostrando producto seleccionado',
+        'data' => new ProductResource($product)
+    ]);
+}
+
  
     /** 
      * Update the specified resource in storage. 
      */ 
-    public function update(UpdateProductRequest $request, string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        $product->update($request->validated()); 
-        return new ProductResource($product); 
-    } 
+     public function update(UpdateProductRequest $request, string $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Producto no encontrado'
+            ], 404);
+        }
+
+        $product->update($request->validated());
+
+        return response()->json([
+            'message' => 'Producto actualizado correctamente',
+            'data' => new ProductResource($product)
+        ], 200);
+    }
  
     /** 
      * Remove the specified resource from storage. 
      */ 
-    public function destroy(string $id) 
-    { 
-        $product = Product::findOrFail($id); 
-        $product->delete(); 
-        return response()->json(null, 204); 
-    }
+    public function destroy(string $id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Producto no encontrado'
+            ], 404);
+        }
+
+        $product->delete();
+
+        return response()->json([
+            'message' => 'Producto eliminado correctamente'
+        ], 204);
+    }
 }
